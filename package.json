@@ -1,0 +1,54 @@
+{
+  "scripts": {
+    "update": "dt-app update",
+    "deploy": "dt-app deploy",
+    "uninstall": "dt-app uninstall",
+    "generate:function": "dt-app generate function",
+    "build": "dt-app build --prod",
+    "start": "dt-app dev",
+    "info": "dt-app info",
+    "help": "dt-app help",
+    "lint": "eslint .",
+    "test": "jest",
+    "test:api": "jest --config=api/jest.config.js",
+    "prettier": "prettier --config .prettierrc 'src/**/*.{ts,tsx}' 'api/*.ts' --write"
+  },
+  "devDependencies": {
+    "@dynatrace/dt-app": "0.97.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.23",
+    "@types/react": "^17.0.58",
+    "@types/react-dom": "^17.0.19",
+    "@types/uuid": "^9.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jest": "^27.5.1",
+    "prettier": "^2.8.7",
+    "ts-jest": "^27.1.5"
+  },
+  "name": "github-actions-profiler",
+  "version": "0.0.0",
+  "description": "An empty project",
+  "engines": {
+    "node": ">=16.13.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@dynatrace-sdk/app-environment": "^0.2.7",
+    "@dynatrace-sdk/client-query-v02": "0.4.8",
+    "@dynatrace-sdk/navigation": "0.2.7",
+    "@dynatrace/sdk-web": "0.7.3",
+    "@dynatrace/strato-components-preview": "0.92.1",
+    "@dynatrace/strato-design-tokens": "0.11.2",
+    "@dynatrace/strato-icons": "0.29.1",
+    "@dynatrace/util-app": "^0.1.3",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^6.10.0",
+    "uuid": "^9.0.0"
+  }
+}
