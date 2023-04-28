@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import {
   Flex,
   LoadingIndicator,
@@ -16,10 +16,10 @@ type CenteredLoadingIndicatorProps = {
  * A component to show a centered loading indicator with some space around.
  * Helpful for loading states of components with fixes sizes, e.g. for the charts layed out in a grid.
  */
-export default function CenteredLoadingIndicator({
+export const  CenteredLoadingIndicator = ({
   height = "300px",
   ...rest
-}: CenteredLoadingIndicatorProps): ReactElement {
+}: CenteredLoadingIndicatorProps) => {
   return (
     <Flex justifyContent="center" alignItems="center" height={height}>
       <LoadingIndicator {...rest} />

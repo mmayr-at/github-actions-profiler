@@ -2,9 +2,49 @@ import { IntentPayload, sendIntent } from "@dynatrace-sdk/navigation";
 import { Button } from "@dynatrace/strato-components-preview/buttons";
 import React from "react";
 import { sendNotificationOnFailedActionsScript } from "./SendNotificationOnFailedActionsScript";
-import { ExpandableText } from "@dynatrace/strato-components-preview/content";
-import { Heading, Section } from "@dynatrace/strato-components-preview/typography";
-import { Flex } from "@dynatrace/strato-components-preview";
+
+/**
+   * This DQL query finds the success rate in percent for each workflow in bizevents.
+   *
+   * Tip: The most convenient way to create DQL queries that you want to use in your code is is
+   * to write and test the query in a Notebook. Then copy the result to your workflow or code.
+   *
+   * */
+const payload: IntentPayload = {
+  title: "Aggregate success rates of previous day",
+  tasks: {
+    successrate: {
+      name: "successrate",
+      action: "dynatrace.automations:run-javascript",
+      input: {
+        script: sendNotificationOnFailedActionsScript,
+      },
+    },
+    sendnotification: {
+      name: "sendnotification",
+      action: "dynatrace.slack:slack-send-message",
+      input: {
+        connection: "",
+        channel: "random",
+
+        message: "success rate is {{result('successrate')}}",
+        reactions: "eyes",
+      },
+      conditions: {
+        custom: "{{result('successrate') <= 75}}",
+      },
+      predecessors: ["successrate"],
+    },
+  },
+  trigger: {
+    schedule: {
+      trigger: {
+        type: "time",
+        time: "09:00",
+      },
+    },
+  },
+};
 
 /**
  * This component renders a button which will use an Intent to create a workflow in your Dynatrace environment.
@@ -21,71 +61,14 @@ import { Flex } from "@dynatrace/strato-components-preview";
  * https://ulc38583.apps.dynatrace.com/ui/apps/dynatrace.hub
  *
  * */
-export default function CreateNotificationWorkflowButton() {
-  /**
-   * This DQL query finds the success rate in percent for each workflow in bizevents.
-   *
-   * Tip: The most convenient way to create DQL queries that you want to use in your code is is
-   * to write and test the query in a Notebook. Then copy the result to your workflow or code.
-   *
-   * */
-
-  const payload: IntentPayload = {
-    title: "Aggregate success rates of previous day",
-    tasks: {
-      successrate: {
-        name: "successrate",
-        action: "dynatrace.automations:run-javascript",
-        input: {
-          script: sendNotificationOnFailedActionsScript,
-        },
-      },
-      sendnotification: {
-        name: "sendnotification",
-        action: "dynatrace.slack:slack-send-message",
-        input: {
-          connection: "",
-          channel: "random",
-
-          message: "success rate is {{result('successrate')}}",
-          reactions: "eyes",
-        },
-        conditions: {
-          custom: "{{result('successrate') <= 75}}",
-        },
-        predecessors: ["successrate"],
-      },
-    },
-    trigger: {
-      schedule: {
-        trigger: {
-          type: "time",
-          time: "09:00",
-        },
-      },
-    },
-  };
-
+export const CreateNotificationWorkflowButton = () => {
   return (
-    <Flex gap={6} flexDirection="column" alignItems={"left"}>
-      <Section>
-        <Heading level={4}>Get Notified</Heading>
-        Set up an workflow that sends you a slack notification every day.
-        <ExpandableText>
-          Dynatrace Automations lets you create workflows on the fly. Here we create a simple
-          workflow that sends you a slack message every morning, if the success rate of one of your
-          GitHub workflows was below 75% for the previous day.
-        </ExpandableText>
-      </Section>
       <Button
-        variant="accent"
         color="primary"
-        onClick={() => {
-          sendIntent(payload, "dynatrace.automations", "create-workflow");
-        }}
+        onClick={() => sendIntent(payload, "dynatrace.automations", "create-workflow")}
       >
         Create Workflow
       </Button>
-    </Flex>
   );
 }
+

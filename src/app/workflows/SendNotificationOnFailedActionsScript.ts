@@ -1,4 +1,4 @@
-import { EVENT_TYPE } from "../util/Constants";
+import { EVENT_TYPE } from "../util/constants";
 
 /**
  * This DQL returns the percentage of successful runs for each GitHub workflow.
@@ -8,7 +8,7 @@ const query = `
 | filter event.type == "${EVENT_TYPE}"
 | fieldsAdd updated_timestamp = toTimestamp(updated_at)
 | filter updated_timestamp > (now()-1d) and updated_timestamp < (now())
-| summarize 
+| summarize
     success_rate = round((countIf(conclusion == "success") / toDouble(count())) * 100, decimals: 1),
     by: {name}
     `;
@@ -29,16 +29,17 @@ const query = `
 
  * */
 export const sendNotificationOnFailedActionsScript = `
-    import { queryClient } from '@dynatrace-sdk/client-query-v02';
+    import { queryExecutionClient } from '@dynatrace-sdk/client-query';
     export default async function successRates() {
-    const response = await queryClient.query({ query: \`${query}\` });
+    const response = await queryExecutionClient
+    .queryExecute({ body: { query: \`${query}\`, requestTimeoutMilliseconds: 5000 }})
     let smallestSuccessRate = 100;
-    response["records"].map((record)=>{
-      const workflow = record.values["name"];
-      const successRate = record.values["success_rate"];
+    response.result["records"].map((record)=>{
+      const workflow = record["name"];
+      const successRate = record["success_rate"];
       if(successRate < smallestSuccessRate) {
         smallestSuccessRate = successRate;
-      } 
+      }
     });
     return smallestSuccessRate;
     }

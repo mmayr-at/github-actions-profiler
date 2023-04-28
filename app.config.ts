@@ -1,7 +1,7 @@
-import type { CliOptions } from "@dynatrace/dt-app";
+import type { CliOptions } from "dt-app";
 
 const config: CliOptions = {
-  environmentUrl: "https://ulc38583.apps.dynatrace.com/",
+  environmentUrl: "https://umsaywsjuo.dev.apps.dynatracelabs.com/",
   icon: "src/assets/app-icon.png",
   app: {
     name: "github-actions-profiler",
@@ -19,6 +19,14 @@ const config: CliOptions = {
         name: "storage:events:write",
         comment: "we need this scope so the serverless function can write events to grail",
       },
+      {
+        name: "storage:bizevents:read",
+        comment: "We need this scope to read bizevents from Grail"
+      },
+      {
+        name: "storage:buckets:read",
+        comment: "We need this scope to read bizevents from Grail"
+      }
     ],
   },
 };

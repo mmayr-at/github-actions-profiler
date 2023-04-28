@@ -16,10 +16,10 @@ type LabeledLoadingIndicatorProps = {
 /**
  * A simple component to render a LoadingIndicator with a message below
  */
-export default function LabeledLoadingIndicator({
+export const LabeledLoadingIndicator = ({
   message,
   ...rest
-}: LabeledLoadingIndicatorProps) {
+}: LabeledLoadingIndicatorProps) => {
   return (
     <Flex flexDirection="column" alignItems="center" gap={16}>
       <LoadingIndicator {...rest} />

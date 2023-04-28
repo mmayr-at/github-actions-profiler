@@ -1,4 +1,4 @@
-import { EVENT_TYPE } from "../../util/Constants";
+import { EVENT_TYPE } from "../../util/constants";
 import { v4 as uuidv4 } from "uuid";
 
 export interface SampleDataOptions {
@@ -53,7 +53,7 @@ export function createRandomBizEvents({
         ...run,
         run_duration_ms: run.updated_at.getTime() - run.run_started_at.getTime(),
       },
-    } as BizEvent;
+    };
   });
 }
 
@@ -98,7 +98,7 @@ function createWorkflowRun(startDate: Date): WorkflowRun {
     run_started_at: new Date(started.getTime()),
     updated_at: new Date(updated.getTime()),
     repository: '{"full_name" : "demo"}',
-  } as WorkflowRun;
+  };
 }
 
 function randomBetween(minInclusive: number, maxInclusive: number) {

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDQLQuery } from "../../util/hooks/useDQLQuery";
 import { convertToTimeseries, Timeseries } from "@dynatrace/strato-components-preview";
-import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "src/app/util/Constants";
-import { normalizeTimeseriesLabels } from "./util/timeseries";
+import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "src/app/util/constants";
 
 export type UseCycleTimeQueryResult = { result: Timeseries[] };
 
@@ -21,7 +20,7 @@ fetch bizevents, from: now() - ${DQL_QUERY_TIMESTAMP_OFFSET}
 | parse repository, "JSON:repository"
 | fieldsAdd fullName = concat(repository[full_name],"/",name)
 | filter event.type == "${EVENT_TYPE}" and fullName == "${workflowName}" and isNotNull(run_duration_ms)
-| summarize value = avg(run_duration_ms) / 1000 / 60.0, by: { interval = bin(updated_timestamp, 7d), conclusion }
+| summarize count = avg(run_duration_ms) / 1000 / 60.0, by: { interval = bin(updated_timestamp, 7d), conclusion }
 | fieldsAdd week = timeframe(from:interval, to:interval+7d)
 | fieldsRemove interval
 `;
@@ -35,7 +34,7 @@ export const useCycleTimeQuery = (
 
   useEffect(() => {
     if (!isLoading && result?.records) {
-      setCycleTimes(convertToTimeseries(result.records).map(normalizeTimeseriesLabels));
+      setCycleTimes(convertToTimeseries(result.records, result.types));
     }
   }, [result, isLoading]);
 

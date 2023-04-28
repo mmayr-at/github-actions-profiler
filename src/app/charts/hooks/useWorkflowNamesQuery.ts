@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDQLQuery } from "../../util/hooks/useDQLQuery";
-import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "../../util/Constants";
-
-type ElementHolder = { element: string };
-type ValuesHolder = { values: ElementHolder };
+import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "../../util/constants";
 
 const field = "githubWorkflows";
 
@@ -33,9 +30,9 @@ export const useWorkflowNamesQuery = (): [string[], boolean] => {
   const [workflows, setWorkflows] = useState<string[]>([]);
   useEffect(() => {
     const records = result?.records || [];
-    const values = records[0]?.values?.[field] as ValuesHolder[];
+    const values = records[0]?.[field] as string[];
     if (!isLoading && values) {
-      setWorkflows(values.map((item) => item.values.element));
+      setWorkflows(values);
     }
   }, [result, isLoading]);
   return [workflows, isLoading];

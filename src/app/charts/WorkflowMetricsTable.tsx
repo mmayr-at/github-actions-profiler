@@ -1,19 +1,19 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import {
   DataTable,
   TableColumn,
   TableVariantConfig,
 } from "@dynatrace/strato-components-preview/tables";
 import { useWorkflowStatsQuery } from "./hooks/useWorkflowStatsQuery";
-import CenteredLoadingIndicator from "../util/components/CenteredLoadingIndicator";
+import {CenteredLoadingIndicator} from "../util/components/CenteredLoadingIndicator";
 
 interface WorkflowMetricsTableProps {
   workflow: string;
 }
 
-export default function WorkflowMetricsTable({
+export const WorkflowMetricsTable = ({
   workflow,
-}: WorkflowMetricsTableProps): ReactElement | null {
+}: WorkflowMetricsTableProps) => {
   const [data, isLoading] = useWorkflowStatsQuery(workflow);
   if (isLoading) return <CenteredLoadingIndicator height="374px" />;
   if (!data) return null;
@@ -35,5 +35,6 @@ export default function WorkflowMetricsTable({
     verticalDividers: true,
     contained: true,
   };
+
   return <DataTable columns={columns} data={data.metrics} variant={tableVariant} fullWidth />;
 }

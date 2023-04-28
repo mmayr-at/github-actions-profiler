@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDQLQuery } from "../../util/hooks/useDQLQuery";
-import { RecordV2Beta } from "@dynatrace-sdk/client-query-v02/types/packages/client/query-v02/src/lib/models/record-v2-beta";
-import { TimeframeV2Beta } from "@dynatrace-sdk/client-query-v02";
-import { formatDuration } from "../../util/time/format-duration";
-import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "src/app/util/Constants";
+import { QueryResult } from "@dynatrace-sdk/client-query";
+import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "src/app/util/constants";
+import { formatDate, format, units } from "@dynatrace-sdk/units";
 
 /**
  * DQL query that returns various statistics about the GitHub Actions workflow.
@@ -20,7 +19,7 @@ fetch bizevents, from:now()-${DQL_QUERY_TIMESTAMP_OFFSET}
 | fieldsAdd fullName = concat(repository[full_name],"/",name)
 | filter fullName=="${workflowName}" and event.type == "${EVENT_TYPE}"
 | fieldsAdd updated_timestamp = toTimestamp(updated_at)
-| summarize 
+| summarize
             triggered = count(),
             failed = countIf(conclusion == "failure"),
             cancelled = countIf(conclusion == "cancelled"),
@@ -31,7 +30,7 @@ fetch bizevents, from:now()-${DQL_QUERY_TIMESTAMP_OFFSET}
             cycle_time_max = max(run_duration_ms),
             cycle_time_stddev = stddev(run_duration_ms),
             by: {interval = bin(updated_timestamp, 7d)}
-| fieldsAdd week = timeframe(from:interval, to:interval+7d)  
+| fieldsAdd week = timeframe(from:interval, to:interval+7d)
 | fields week, triggered, failed, cancelled, success, cycle_time_avg, cycle_time_min, cycle_time_max, cycle_time_stddev, success_rate
 | sort week desc
 | limit 3
@@ -48,27 +47,43 @@ export interface WorkflowMetrics {
   metrics: WorkflowMetric[];
 }
 
-function formatTimeframeV2BetaTimestamp(val?: string) {
+function formatTimestamp(val?: string) {
   if (val === undefined) {
     return "";
   }
-  return new Date(val).toLocaleDateString("en-US", {
+  return formatDate(new Date(val), {
     month: "short",
     day: "numeric",
   });
 }
 
-function extractMetricValues(records: RecordV2Beta[], metric: string): string[] {
-  return records.map((record) => record.values?.[metric]?.toString() ?? "").reverse();
+function isTimeframe(value: unknown): value is { start: string, end: string } {
+  return value !== null && value !== undefined && typeof value['start'] === 'string' && typeof value['end'] === 'string';
 }
 
-function convertToMetrics(records: RecordV2Beta[]): WorkflowMetrics {
+function extractMetricValues(records: QueryResult['records'], metric: string): string[] {
+  return records.map((record) => {
+    if (record !== null) {
+      return record[metric]?.toString() ?? '';
+    }
+    return '';
+  }).reverse();
+}
+
+function convertToMetrics(records: QueryResult['records']): WorkflowMetrics {
   const valueHeadings = records
     .map((record) => {
-      const week = record.values?.week as TimeframeV2Beta;
-      const start = formatTimeframeV2BetaTimestamp(week.start);
-      const end = formatTimeframeV2BetaTimestamp(week.end);
-      return `${start} - ${end}`;
+      if (record === null) {
+        return '-';
+      }
+      const week = record.week;
+      if (isTimeframe(week)) {
+        const start = formatTimestamp(week.start);
+        const end = formatTimestamp(week.end);
+        return `${start} - ${end}`;
+      } else {
+        return '-';
+      }
     })
     .reverse();
 
@@ -98,25 +113,25 @@ function convertToMetrics(records: RecordV2Beta[]): WorkflowMetrics {
       {
         metric: "Cycle time average",
         values: extractMetricValues(records, "cycle_time_avg").map((value) =>
-          formatDuration(parseInt(value)),
+          format(parseInt(value), { input: units.time.millisecond, cascade: 3 }),
         ),
       },
       {
         metric: "Cycle time minimum",
         values: extractMetricValues(records, "cycle_time_min").map((value) =>
-          formatDuration(parseInt(value)),
+          format(parseInt(value), { input: units.time.millisecond, cascade: 3 }),
         ),
       },
       {
         metric: "Cycle time maximum",
         values: extractMetricValues(records, "cycle_time_max").map((value) =>
-          formatDuration(parseInt(value)),
+          format(parseInt(value), { input: units.time.millisecond, cascade: 3 }),
         ),
       },
       {
         metric: "Cycle time stddev",
         values: extractMetricValues(records, "cycle_time_stddev").map((value) =>
-          formatDuration(parseInt(value)),
+          format(parseInt(value), { input: units.time.millisecond, cascade: 3 }),
         ),
       },
     ],
@@ -126,14 +141,14 @@ function convertToMetrics(records: RecordV2Beta[]): WorkflowMetrics {
 export const useWorkflowStatsQuery = (
   workflowName: string,
 ): [WorkflowMetrics | undefined, boolean] => {
-  const [result, isLoading] = useDQLQuery(query(workflowName));
+  const [data, isLoading] = useDQLQuery(query(workflowName));
   const [metrics, setMetrics] = useState<WorkflowMetrics | undefined>();
 
   useEffect(() => {
-    if (!isLoading && result?.records) {
-      setMetrics(convertToMetrics(result.records));
+    if (!isLoading && data?.records) {
+      setMetrics(convertToMetrics(data.records));
     }
-  }, [result, isLoading]);
+  }, [data, isLoading]);
 
   return [metrics, isLoading];
 };

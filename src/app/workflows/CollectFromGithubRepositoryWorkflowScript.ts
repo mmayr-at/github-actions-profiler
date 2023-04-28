@@ -1,4 +1,4 @@
-import { EVENT_TYPE } from "../util/Constants";
+import { EVENT_TYPE } from "../util/constants";
 
 /**
  * When we dynamically create a workflow from within the app,
@@ -9,16 +9,16 @@ import { EVENT_TYPE } from "../util/Constants";
  * */
 export const CollectFromGithubRepositoryWorkflowScript = `
 /**
-This code fetches Action Workflows from a Github repository, and then 
-writes that data as business events into Dynatrace Grail.   
+This code fetches Action Workflows from a Github repository, and then
+writes that data as business events into Dynatrace Grail.
 */
 /*
-  In order to access your repository, you need to provide 
-  See https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token 
-  
-  For testing purposes, you can simply add the token directly into the constant below. If you want to use this code beyond simple testing, 
-  we strongly recommend to NOT store any personal credentials directly inside a Workflow, but instead make use of Dynatrace secure Secret Management capabilities. 
-  
+  In order to access your repository, you need to provide
+  See https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+
+  For testing purposes, you can simply add the token directly into the constant below. If you want to use this code beyond simple testing,
+  we strongly recommend to NOT store any personal credentials directly inside a Workflow, but instead make use of Dynatrace secure Secret Management capabilities.
+
   See https://developer.dynatrace.com/preview/develop/security/secrets-management/
 */
 const GITHUB_ACCESS_TOKEN = "[YOUR GITHUB TOKEN]";
@@ -27,12 +27,10 @@ const GITHUB_ACCESS_TOKEN = "[YOUR GITHUB TOKEN]";
 const GITHUB_REPOSITORY = "Dynatrace/dynatrace-operator";
 
 /* This is the type buy which we filter bizevents when we query data from within the github actions profiler app.
-You can change this to anything you like, but it should match the EVENT_TYPE constant in the app if you want to 
+You can change this to anything you like, but it should match the EVENT_TYPE constant in the app if you want to
 see the data there.
  */
 const WORKFLOW_TYPE = "${EVENT_TYPE}";
-
-import { coreClient } from '@dynatrace-sdk/client-core';
 
 const githubHeaders = {
   Authorization: \`Bearer \${GITHUB_ACCESS_TOKEN}\`

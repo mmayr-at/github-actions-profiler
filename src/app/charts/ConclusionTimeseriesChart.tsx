@@ -1,10 +1,11 @@
-import { ChartVariant, Timeseries, TimeseriesChart } from "@dynatrace/strato-components-preview";
+import { ChartVariant, Timeseries, TimeseriesChart, Text } from "@dynatrace/strato-components-preview";
 import { COLOR_CANCELLED, COLOR_FAILURE, COLOR_SUCCESS } from "./ChartColorPalette";
 import React from "react";
 
 interface ConclusionTimeseriesChartProps {
   timeseries: Timeseries[];
   variant: ChartVariant;
+  loading: boolean
 }
 
 function getTimeseriesChartComponent(
@@ -19,16 +20,16 @@ function getTimeseriesChartComponent(
   }
 }
 
-export default function ConclusionTimeseriesChart({
+export const ConclusionTimeseriesChart = ({
   timeseries,
   variant,
-}: ConclusionTimeseriesChartProps) {
-  const successTimeseries = timeseries.find((t) => t.name === "success");
-  const failureTimeseries = timeseries.find((t) => t.name === "failure");
-  const cancelledTimeseries = timeseries.find((t) => t.name === "cancelled");
+  loading
+}: ConclusionTimeseriesChartProps) => {
+  const successTimeseries = timeseries.find((t) => t.name.includes("success"));
+  const failureTimeseries = timeseries.find((t) => t.name.includes("failure"));
+  const cancelledTimeseries = timeseries.find((t) => t.name.includes("cancelled"));
   const TimeseriesChartComponent = getTimeseriesChartComponent(variant);
-  return (
-    <TimeseriesChart variant={variant}>
+  return timeseries.length > 0 || loading ? <TimeseriesChart variant={variant} loading={loading}>
       {successTimeseries && (
         <TimeseriesChartComponent data={successTimeseries} color={COLOR_SUCCESS} />
       )}
@@ -38,6 +39,6 @@ export default function ConclusionTimeseriesChart({
       {cancelledTimeseries && (
         <TimeseriesChartComponent data={cancelledTimeseries} color={COLOR_CANCELLED} />
       )}
-    </TimeseriesChart>
-  );
+    </TimeseriesChart> : <Text>No data available</Text>
+  ;
 }

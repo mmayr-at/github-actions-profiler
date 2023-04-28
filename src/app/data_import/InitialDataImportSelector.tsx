@@ -1,37 +1,22 @@
 import React from "react";
-import { Flex, Strong } from "@dynatrace/strato-components-preview";
-import LabeledLoadingIndicator from "../util/components/LabeledLoadingIndicator";
-import { DataImportState } from "./DataImport";
-import LinkIngesterActionButton from "../workflows/LinkIngesterActionButton";
-import ImportSampleDataButton from "./ImportSampleDataButton";
-import styled from "styled-components";
+import { Strong } from "@dynatrace/strato-components-preview";
+import { LabeledLoadingIndicator } from "../util/components/LabeledLoadingIndicator";
+import { DataImportState } from "./useCheckData";
+import { ImportSampleDataCard } from "../cards/ImportSampleDataCard";
 
 interface InitialDataImportSelectorProps {
   dataImportState: DataImportState;
   onImportButtonClick: () => void;
 }
 
-const ImportOptionDiv = styled.div`
-  flex: 1;
-`;
-
-export default function InitialDataImportSelector({
+export const InitialDataImportSelector = ({
   dataImportState,
   onImportButtonClick,
-}: InitialDataImportSelectorProps) {
+}: InitialDataImportSelectorProps) => {
   switch (dataImportState) {
     case "not_available":
       return (
-        <Flex flexDirection="column">
-          <Flex gap={16}>
-            <ImportOptionDiv>
-              <ImportSampleDataButton onClick={onImportButtonClick} />
-            </ImportOptionDiv>
-            <ImportOptionDiv>
-              <LinkIngesterActionButton />
-            </ImportOptionDiv>
-          </Flex>
-        </Flex>
+        <ImportSampleDataCard onClick={onImportButtonClick}/>
       );
     case "checking":
       return <LabeledLoadingIndicator message="Checking if there is data available ..." />;

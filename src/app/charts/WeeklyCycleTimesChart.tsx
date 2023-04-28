@@ -1,25 +1,21 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { useCycleTimeQuery } from "./hooks/useCycleTimeQuery";
-import CenteredLoadingIndicator from "../util/components/CenteredLoadingIndicator";
-import ChartContainer from "./ChartContainer";
-import ConclusionTimeseriesChart from "./ConclusionTimeseriesChart";
+import {ChartContainer} from "./ChartContainer";
+import { ConclusionTimeseriesChart } from "./ConclusionTimeseriesChart";
 
 interface WeeklyCycleTimesChartProps {
   workflow: string;
 }
 
-export default function WeeklyCycleTimesChart({
+export const WeeklyCycleTimesChart = ({
   workflow,
-}: WeeklyCycleTimesChartProps): ReactElement | null {
+}: WeeklyCycleTimesChartProps) => {
   const [weeklyCycleTimes, isLoading] = useCycleTimeQuery(workflow);
 
   return (
     <ChartContainer heading="Average cycle time in minutes per week">
-      {isLoading || weeklyCycleTimes === undefined ? (
-        <CenteredLoadingIndicator />
-      ) : (
-        <ConclusionTimeseriesChart timeseries={weeklyCycleTimes.result} variant="line" />
-      )}
+      <ConclusionTimeseriesChart loading={isLoading} timeseries={weeklyCycleTimes?.result || []} variant="line" />
     </ChartContainer>
   );
 }
+

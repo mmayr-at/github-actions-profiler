@@ -7,15 +7,8 @@ export const EVENT_TYPE = "com.dynatrace.github.workflow.run";
 
 // Used in DQL queries to specify event timestamp range. This is *not* related to the updated_at timestamp of the
 // workflow run itself.
-export const DQL_QUERY_TIMESTAMP_OFFSET = `${365 * 3}d`;
+export const DQL_QUERY_TIMESTAMP_OFFSET = '90d';
 
 // Defines in which interval the data import should re-check if there is data available.
 // See DataImport.tsx for more information.
 export const RELOAD_RECORDS_AVAILABLE_INTERVAL_MS = 10000;
-
-// The color palette used for the charts.
-// See the Strato design system documentation for available options:
-// https://developer.dynatrace.com/preview/reference/design-system/preview/charts/CategoricalBarChart/#change-the-chart-colors
-import { ColorPalette } from "@dynatrace/strato-components-preview";
-
-export const CHARTS_COLOR_PALETTE: ColorPalette = "apdex";

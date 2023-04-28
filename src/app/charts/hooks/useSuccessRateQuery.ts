@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDQLQuery } from "../../util/hooks/useDQLQuery";
-import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "../../util/Constants";
+import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "../../util/constants";
 
 export type SuccessRate = { category: string; value: number };
 export type UseSuccessRateQueryResult = { rates: SuccessRate[] };
@@ -29,7 +29,7 @@ export const useSuccessRateQuery = (
 
   useEffect(() => {
     if (!isLoading && result?.records) {
-      setRates(result.records.map((record) => record.values as SuccessRate));
+      setRates(result.records.map((record) => record as SuccessRate));
     }
   }, [result, isLoading]);
 

@@ -1,14 +1,13 @@
-import React, { ReactElement, useState } from "react";
-import { Grid } from "@dynatrace/strato-components-preview";
-import WorkflowSelect from "./WorkflowSelect";
-import WorkflowMetricsTable from "./WorkflowMetricsTable";
+import React, { useState } from "react";
+import { Flex, Grid } from "@dynatrace/strato-components-preview";
+import {WorkflowSelect} from "./WorkflowSelect";
+import {WorkflowMetricsTable} from "./WorkflowMetricsTable";
 import SuccessRateDonutChart from "./SuccessRateDonutChart";
-import WeeklyCycleTimesChart from "./WeeklyCycleTimesChart";
-import WeeklySuccessRatesChart from "./WeeklySuccessRatesChart";
+import {WeeklyCycleTimesChart} from "./WeeklyCycleTimesChart";
+import {WeeklySuccessRatesChart} from "./WeeklySuccessRatesChart";
 import { useWorkflowNamesQuery } from "./hooks/useWorkflowNamesQuery";
-import CallToActionsCard from "./CallToActionsCard";
 
-export default function ChartsLayout(): ReactElement {
+export const ChartsLayout = () => {
   const [selectedWorkflow, setSelectedWorkflow] = useState<string | undefined>();
   const [workflows] = useWorkflowNamesQuery();
 
@@ -17,35 +16,30 @@ export default function ChartsLayout(): ReactElement {
   }
 
   return (
-    <Grid gridTemplateColumns="repeat(2, 1fr)" rowGap={32}>
-      <Grid gridItem gridColumn="1 / 3">
-        <CallToActionsCard />
-      </Grid>
-      <Grid gridItem gridColumn="1 / 2">
+    <Flex flexDirection="column">
+      <Flex>
         <WorkflowSelect
           selectedWorkflow={selectedWorkflow}
           workflows={workflows}
           onChange={setSelectedWorkflow}
         />
-      </Grid>
-      <Grid gridItem gridColumn="1 /3">
-        {selectedWorkflow && (
-          <Grid gridTemplateColumns="repeat(4, 1fr)" gap={32}>
-            <Grid gridItem gridColumn="1 / 4">
-              <WorkflowMetricsTable workflow={selectedWorkflow} />
-            </Grid>
-            <Grid gridItem gridColumn="4 / 5">
-              <SuccessRateDonutChart workflow={selectedWorkflow} />
-            </Grid>
-            <Grid gridItem gridColumn="1 / 3 ">
-              <WeeklyCycleTimesChart workflow={selectedWorkflow} />
-            </Grid>
-            <Grid gridItem gridColumn="3 / 5">
-              <WeeklySuccessRatesChart workflow={selectedWorkflow} />
-            </Grid>
+      </Flex>
+      {selectedWorkflow && (
+        <Grid gridTemplateColumns="repeat(auto-fit, minmax(320px, 1fr));" gap={16}>
+          <Grid gridItem gridColumnStart="span 3">
+            <WorkflowMetricsTable workflow={selectedWorkflow} />
           </Grid>
-        )}
-      </Grid>
-    </Grid>
+          <Grid gridItem>
+            <SuccessRateDonutChart workflow={selectedWorkflow} />
+          </Grid>
+          <Grid gridItem gridColumnStart="span 2">
+            <WeeklyCycleTimesChart workflow={selectedWorkflow} />
+          </Grid>
+          <Grid gridItem gridColumnStart="span 2">
+            <WeeklySuccessRatesChart workflow={selectedWorkflow} />
+          </Grid>
+        </Grid>
+      )}
+    </Flex>
   );
 }

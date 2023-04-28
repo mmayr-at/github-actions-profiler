@@ -1,25 +1,20 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { useWeeklySuccessRateQuery } from "./hooks/useWeeklySuccessRateQuery";
-import CenteredLoadingIndicator from "../util/components/CenteredLoadingIndicator";
-import ChartContainer from "./ChartContainer";
-import ConclusionTimeseriesChart from "./ConclusionTimeseriesChart";
+import {ChartContainer} from "./ChartContainer";
+import { ConclusionTimeseriesChart } from "./ConclusionTimeseriesChart";
 
 interface WeeklySuccessRatesChartProps {
   workflow: string;
 }
 
-export default function WeeklySuccessRatesChart({
+export const WeeklySuccessRatesChart = ({
   workflow,
-}: WeeklySuccessRatesChartProps): ReactElement | null {
+}: WeeklySuccessRatesChartProps) => {
   const [weeklySuccessRates, isLoading] = useWeeklySuccessRateQuery(workflow);
 
   return (
     <ChartContainer heading="Workflow runs per week">
-      {isLoading || weeklySuccessRates === undefined ? (
-        <CenteredLoadingIndicator />
-      ) : (
-        <ConclusionTimeseriesChart timeseries={weeklySuccessRates.result} variant="bar" />
-      )}
+      <ConclusionTimeseriesChart loading={isLoading} timeseries={weeklySuccessRates?.result || []} variant="bar" />
     </ChartContainer>
   );
 }

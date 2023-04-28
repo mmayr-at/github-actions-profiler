@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDQLQuery } from "../../util/hooks/useDQLQuery";
 import { convertToTimeseries, Timeseries } from "@dynatrace/strato-components-preview";
-import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "../../util/Constants";
-import { normalizeTimeseriesLabels } from "./util/timeseries";
+import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "../../util/constants";
 
 export type UseWeeklySuccessRateQueryResult = { result: Timeseries[] };
 
@@ -21,7 +20,7 @@ fetch bizevents, from: now() - ${DQL_QUERY_TIMESTAMP_OFFSET}
 | fieldsAdd fullName = concat(repository[full_name],"/",name)
 | filter fullName == "${workflowName}" and event.type == "${EVENT_TYPE}" and isNotNull(conclusion)
 | fieldsAdd updated_timestamp = toTimestamp(updated_at)
-| summarize value = count(), by: {interval = bin(updated_timestamp, 7d), conclusion}
+| summarize count = count(), by: {interval = bin(updated_timestamp, 7d), conclusion}
 | fieldsAdd week = timeframe(from:interval, to:interval+7d)
 | fieldsRemove interval
 `;
@@ -35,7 +34,7 @@ export const useWeeklySuccessRateQuery = (
 
   useEffect(() => {
     if (!isLoading && result?.records) {
-      setRates(convertToTimeseries(result.records).map(normalizeTimeseriesLabels));
+      setRates(convertToTimeseries(result.records, result.types));
     }
   }, [result, isLoading]);
 

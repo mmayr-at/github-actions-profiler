@@ -1,4 +1,12 @@
 {
+  "name": "github-actions-profiler",
+  "version": "0.0.0",
+  "description": "An empty project",
+  "engines": {
+    "node": ">=16.13.0"
+  },
+  "author": "",
+  "license": "Apache-2.0",
   "scripts": {
     "update": "dt-app update",
     "deploy": "dt-app deploy",
@@ -13,8 +21,21 @@
     "test:api": "jest --config=api/jest.config.js",
     "prettier": "prettier --config .prettierrc 'src/**/*.{ts,tsx}' 'api/*.ts' --write"
   },
+  "dependencies": {
+    "@dynatrace-sdk/app-environment": "^1.0.0",
+    "@dynatrace-sdk/app-utils": "^0.2.1",
+    "@dynatrace-sdk/navigation": "^1.0.0",
+    "@dynatrace-sdk/units": "^0.7.1",
+    "@dynatrace/strato-components-preview": "0.94.4",
+    "@dynatrace/strato-design-tokens": "0.12.1",
+    "@dynatrace/strato-icons": "0.30.5",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^6.10.0",
+    "uuid": "^9.0.0"
+  },
   "devDependencies": {
-    "@dynatrace/dt-app": "0.97.0",
+    "@dynatrace/runtime-simulator": "^0.9.1",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.23",
     "@types/react": "^17.0.58",
@@ -22,33 +43,12 @@
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.58.0",
     "@typescript-eslint/parser": "^5.58.0",
+    "dt-app": "0.99.3",
     "eslint": "^8.38.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jest": "^27.5.1",
     "prettier": "^2.8.7",
     "ts-jest": "^27.1.5"
-  },
-  "name": "github-actions-profiler",
-  "version": "0.0.0",
-  "description": "An empty project",
-  "engines": {
-    "node": ">=16.13.0"
-  },
-  "author": "",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "@dynatrace-sdk/app-environment": "^0.2.7",
-    "@dynatrace-sdk/client-query-v02": "0.4.8",
-    "@dynatrace-sdk/navigation": "0.2.7",
-    "@dynatrace/sdk-web": "0.7.3",
-    "@dynatrace/strato-components-preview": "0.92.1",
-    "@dynatrace/strato-design-tokens": "0.11.2",
-    "@dynatrace/strato-icons": "0.29.1",
-    "@dynatrace/util-app": "^0.1.3",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.2",
-    "react-router-dom": "^6.10.0",
-    "uuid": "^9.0.0"
   }
 }
