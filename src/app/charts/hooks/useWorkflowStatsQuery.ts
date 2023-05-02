@@ -47,18 +47,19 @@ export interface WorkflowMetrics {
   metrics: WorkflowMetric[];
 }
 
-function formatTimestamp(val?: string) {
-  if (val === undefined) {
+function formatTimestamp(value?: Date) {
+  if (value === undefined) {
     return "";
   }
-  return formatDate(new Date(val), {
+  return formatDate(value, {
     month: "short",
     day: "numeric",
   });
 }
 
-function isTimeframe(value: unknown): value is { start: string, end: string } {
-  return value !== null && value !== undefined && typeof value['start'] === 'string' && typeof value['end'] === 'string';
+function isTimeframe(value: unknown): value is { start: Date, end: Date } {
+  console.log(value!['start'] instanceof Date);
+  return value !== null && value !== undefined && value['start'] instanceof Date && value['end'] instanceof Date;
 }
 
 function extractMetricValues(records: QueryResult['records'], metric: string): string[] {
@@ -77,6 +78,7 @@ function convertToMetrics(records: QueryResult['records']): WorkflowMetrics {
         return '-';
       }
       const week = record.week;
+      console.log(record);
       if (isTimeframe(week)) {
         const start = formatTimestamp(week.start);
         const end = formatTimestamp(week.end);
