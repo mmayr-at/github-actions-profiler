@@ -35,7 +35,9 @@
 .DS_Store
 Thumbs.db
 
-
 # DT-APP files
 .dt-app/*
 !/.dt-app/deployment.json
+
+# Test reports
+reports/
