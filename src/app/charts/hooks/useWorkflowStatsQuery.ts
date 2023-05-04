@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { useDQLQuery } from "../../util/hooks/useDQLQuery";
-import { QueryResult } from "@dynatrace-sdk/client-query";
-import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "src/app/util/constants";
-import { formatDate, format, units } from "@dynatrace-sdk/units";
+import { useEffect, useState } from 'react';
+import { useDQLQuery } from '../../util/hooks/useDQLQuery';
+import { QueryResult } from '@dynatrace-sdk/client-query';
+import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from 'src/app/util/constants';
+import { formatDate, format, units } from '@dynatrace-sdk/units';
 
 /**
  * DQL query that returns various statistics about the GitHub Actions workflow.
@@ -49,25 +49,27 @@ export interface WorkflowMetrics {
 
 function formatTimestamp(value?: Date) {
   if (value === undefined) {
-    return "";
+    return '';
   }
   return formatDate(value, {
-    month: "short",
-    day: "numeric",
+    month: 'short',
+    day: 'numeric',
   });
 }
 
-function isTimeframe(value: unknown): value is { start: Date, end: Date } {
+function isTimeframe(value: unknown): value is { start: Date; end: Date } {
   return value !== null && value !== undefined && value['start'] instanceof Date && value['end'] instanceof Date;
 }
 
 function extractMetricValues(records: QueryResult['records'], metric: string): string[] {
-  return records.map((record) => {
-    if (record !== null) {
-      return record[metric]?.toString() ?? '';
-    }
-    return '';
-  }).reverse();
+  return records
+    .map((record) => {
+      if (record !== null) {
+        return record[metric]?.toString() ?? '';
+      }
+      return '';
+    })
+    .reverse();
 }
 
 function convertToMetrics(records: QueryResult['records']): WorkflowMetrics {
@@ -91,46 +93,46 @@ function convertToMetrics(records: QueryResult['records']): WorkflowMetrics {
     valueHeadings,
     metrics: [
       {
-        metric: "Triggered",
-        values: extractMetricValues(records, "triggered"),
+        metric: 'Triggered',
+        values: extractMetricValues(records, 'triggered'),
       },
       {
-        metric: "Failed",
-        values: extractMetricValues(records, "failed"),
+        metric: 'Failed',
+        values: extractMetricValues(records, 'failed'),
       },
       {
-        metric: "Cancelled",
-        values: extractMetricValues(records, "cancelled"),
+        metric: 'Cancelled',
+        values: extractMetricValues(records, 'cancelled'),
       },
       {
-        metric: "Success",
-        values: extractMetricValues(records, "success"),
+        metric: 'Success',
+        values: extractMetricValues(records, 'success'),
       },
       {
-        metric: "Success rate",
-        values: extractMetricValues(records, "success_rate"),
+        metric: 'Success rate',
+        values: extractMetricValues(records, 'success_rate'),
       },
       {
-        metric: "Cycle time average",
-        values: extractMetricValues(records, "cycle_time_avg").map((value) =>
+        metric: 'Cycle time average',
+        values: extractMetricValues(records, 'cycle_time_avg').map((value) =>
           format(parseInt(value), { input: units.time.millisecond, cascade: 3 }),
         ),
       },
       {
-        metric: "Cycle time minimum",
-        values: extractMetricValues(records, "cycle_time_min").map((value) =>
+        metric: 'Cycle time minimum',
+        values: extractMetricValues(records, 'cycle_time_min').map((value) =>
           format(parseInt(value), { input: units.time.millisecond, cascade: 3 }),
         ),
       },
       {
-        metric: "Cycle time maximum",
-        values: extractMetricValues(records, "cycle_time_max").map((value) =>
+        metric: 'Cycle time maximum',
+        values: extractMetricValues(records, 'cycle_time_max').map((value) =>
           format(parseInt(value), { input: units.time.millisecond, cascade: 3 }),
         ),
       },
       {
-        metric: "Cycle time stddev",
-        values: extractMetricValues(records, "cycle_time_stddev").map((value) =>
+        metric: 'Cycle time stddev',
+        values: extractMetricValues(records, 'cycle_time_stddev').map((value) =>
           format(parseInt(value), { input: units.time.millisecond, cascade: 3 }),
         ),
       },
@@ -138,9 +140,7 @@ function convertToMetrics(records: QueryResult['records']): WorkflowMetrics {
   };
 }
 
-export const useWorkflowStatsQuery = (
-  workflowName: string,
-): [WorkflowMetrics | undefined, boolean] => {
+export const useWorkflowStatsQuery = (workflowName: string): [WorkflowMetrics | undefined, boolean] => {
   const [data, isLoading] = useDQLQuery(query(workflowName));
   const [metrics, setMetrics] = useState<WorkflowMetrics | undefined>();
 

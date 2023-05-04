@@ -1,4 +1,4 @@
-import { BizEvent, createRandomBizEvents, SampleDataOptions } from "./generate-sample-data";
+import { BizEvent, createRandomBizEvents, SampleDataOptions } from './generate-sample-data';
 
 function daysInMs(days: number): number {
   return 1000 * 60 * 60 * 24 * days;
@@ -8,7 +8,7 @@ type BizEventsPerDay = { [date: string]: BizEvent[] };
 
 function groupPerDay(bizEvents: BizEvent[]): BizEventsPerDay {
   return bizEvents.reduce((prevValue, currValue) => {
-    const date = currValue.data.run_started_at.toISOString().split("T")[0];
+    const date = currValue.data.run_started_at.toISOString().split('T')[0];
     if (prevValue[date]) {
       prevValue[date].push(currValue);
     } else {
@@ -20,9 +20,9 @@ function groupPerDay(bizEvents: BizEvent[]): BizEventsPerDay {
 
 const anyOptions: SampleDataOptions = {};
 
-describe("createRandomBizEvents", () => {
-  test("returns biz events with given event type", () => {
-    const eventType = "event-type";
+describe('createRandomBizEvents', () => {
+  test('returns biz events with given event type', () => {
+    const eventType = 'event-type';
 
     const bizEvents = createRandomBizEvents({ eventType });
 
@@ -31,7 +31,7 @@ describe("createRandomBizEvents", () => {
     });
   });
 
-  test("returns biz events with run_started_at between startOfToday and startOfTodayMinusNumberOfDays", () => {
+  test('returns biz events with run_started_at between startOfToday and startOfTodayMinusNumberOfDays', () => {
     const numberOfDays = 30;
 
     const bizEvents = createRandomBizEvents({ numberOfDays });
@@ -45,29 +45,30 @@ describe("createRandomBizEvents", () => {
     });
   });
 
-  test("returns not more than ${maxRunsPerDay} biz events per day", () => {
+  test('returns not more than ${maxRunsPerDay} biz events per day', () => {
     const maxRunsPerDay = 5;
 
     const bizEvents = createRandomBizEvents({ maxRunsPerDay });
 
     const eventsPerDay = groupPerDay(bizEvents);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     Object.entries(eventsPerDay).forEach(([_, events]) => {
       expect(events.length).toBeLessThanOrEqual(maxRunsPerDay);
     });
   });
 
-  test("returns biz events with expected properties", () => {
+  test('returns biz events with expected properties', () => {
     const bizEvents = createRandomBizEvents(anyOptions);
 
     bizEvents.forEach((bizEvent) => {
       expect(bizEvent.id).toMatch(/^demobatch_run_.*/);
-      expect(bizEvent.source).toEqual("github-actions-profiler");
-      expect(bizEvent.specversion).toEqual("1.0");
+      expect(bizEvent.source).toEqual('github-actions-profiler');
+      expect(bizEvent.specversion).toEqual('1.0');
       expect(bizEvent.data.repository).toEqual('{"full_name" : "demo"}');
     });
   });
 
-  test("returns biz events with unique IDs", () => {
+  test('returns biz events with unique IDs', () => {
     const bizEvents = createRandomBizEvents(anyOptions);
 
     const uniqueIds = new Set(bizEvents.map((bizEvent) => bizEvent.id));

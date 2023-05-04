@@ -9,7 +9,9 @@ export const GithubIngesterActionCard = () => {
       subtitle='Use our ingester GitHub Action to observe your workflows as they happen.'
       content='This is a GitHub Action for ingesting the information about a completed GitHub Actions Workflow as a Business
       Event into Dynatrace Grail.'
-      action={<ExternalLink href='https://github.com/SemanticlabsGmbH/dynatrace-workflow-ingester'>Go to GitHub</ExternalLink>}
+      action={
+        <ExternalLink href='https://github.com/SemanticlabsGmbH/dynatrace-workflow-ingester'>Go to GitHub</ExternalLink>
+      }
     />
   );
 };

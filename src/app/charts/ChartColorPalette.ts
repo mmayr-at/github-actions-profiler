@@ -1,5 +1,5 @@
-import { CustomColorPalette } from "@dynatrace/strato-components-preview";
-import { Colors } from "@dynatrace/strato-design-tokens";
+import { CustomColorPalette } from '@dynatrace/strato-components-preview';
+import { Colors } from '@dynatrace/strato-design-tokens';
 
 // The color palette used for the charts.
 // See the Strato design system documentation for available options:

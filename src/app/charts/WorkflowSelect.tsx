@@ -1,5 +1,5 @@
-import React from "react";
-import { FormField, Select, SelectOption } from "@dynatrace/strato-components-preview/forms";
+import React from 'react';
+import { FormField, Select, SelectOption } from '@dynatrace/strato-components-preview/forms';
 
 interface WorkflowSelectProps {
   selectedWorkflow?: string;
@@ -7,26 +7,22 @@ interface WorkflowSelectProps {
   onChange: (arg: string | undefined) => void;
 }
 
-export const WorkflowSelect = ({
-  selectedWorkflow,
-  workflows,
-  onChange,
-}: WorkflowSelectProps) => {
+export const WorkflowSelect = ({ selectedWorkflow, workflows, onChange }: WorkflowSelectProps) => {
   return (
-    <FormField label="Select a workflow">
+    <FormField label='Select a workflow'>
       <Select
-        name="workflow-select"
+        name='workflow-select'
         selectedId={selectedWorkflow && workflows ? [selectedWorkflow] : null}
         onChange={([selectedWorkflow]: string[]) => onChange(selectedWorkflow)}
         hasFilter
         disabled={workflows.length === 0}
       >
         {workflows.map((workflow) => (
-          <SelectOption id={workflow || "undefined"} key={workflow}>
+          <SelectOption id={workflow || 'undefined'} key={workflow}>
             {workflow}
           </SelectOption>
         ))}
       </Select>
     </FormField>
   );
-}
+};

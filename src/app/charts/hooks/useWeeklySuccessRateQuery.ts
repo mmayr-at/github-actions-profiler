@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useDQLQuery } from "../../util/hooks/useDQLQuery";
-import { convertToTimeseries, Timeseries } from "@dynatrace/strato-components-preview";
-import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "../../util/constants";
+import { useEffect, useState } from 'react';
+import { useDQLQuery } from '../../util/hooks/useDQLQuery';
+import { convertToTimeseries, Timeseries } from '@dynatrace/strato-components-preview';
+import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from '../../util/constants';
 
 export type UseWeeklySuccessRateQueryResult = { result: Timeseries[] };
 

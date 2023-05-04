@@ -1,10 +1,10 @@
-import { IntentPayload, sendIntent } from "@dynatrace-sdk/navigation";
-import { Button } from "@dynatrace/strato-components-preview/buttons";
-import React from "react";
-import { CollectFromGithubRepositoryWorkflowScript } from "./CollectFromGithubRepositoryWorkflowScript";
-import { ExpandableText } from "@dynatrace/strato-components-preview/content";
-import { Code, Paragraph, Section, Strong } from "@dynatrace/strato-components-preview/typography";
-import { Flex } from "@dynatrace/strato-components-preview";
+import { IntentPayload, sendIntent } from '@dynatrace-sdk/navigation';
+import { Button } from '@dynatrace/strato-components-preview/buttons';
+import React from 'react';
+import { CollectFromGithubRepositoryWorkflowScript } from './CollectFromGithubRepositoryWorkflowScript';
+import { ExpandableText } from '@dynatrace/strato-components-preview/content';
+import { Code, Paragraph, Section, Strong } from '@dynatrace/strato-components-preview/typography';
+import { Flex } from '@dynatrace/strato-components-preview';
 
 /**
  * This component demonstrates how you can create a dynatrace workflow from within your app.
@@ -16,11 +16,11 @@ export default function CreateIngesterWorkflowButton() {
   const payload: IntentPayload = {
     automation: {
       workflow: {
-        title: "Aggregate success rates of previous day",
+        title: 'Aggregate success rates of previous day',
         tasks: {
           collectGithubWorkflows: {
-            name: "collectGithubWorkflows",
-            action: "dynatrace.automations:run-javascript",
+            name: 'collectGithubWorkflows',
+            action: 'dynatrace.automations:run-javascript',
             input: {
               script: CollectFromGithubRepositoryWorkflowScript,
             },
@@ -30,8 +30,8 @@ export default function CreateIngesterWorkflowButton() {
       trigger: {
         schedule: {
           trigger: {
-            type: "time",
-            time: "09:00",
+            type: 'time',
+            time: '09:00',
           },
         },
       },
@@ -39,13 +39,13 @@ export default function CreateIngesterWorkflowButton() {
   };
 
   return (
-    <Flex gap={6} flexDirection="column" alignItems={"left"}>
+    <Flex gap={6} flexDirection='column' alignItems={'left'}>
       <Paragraph>
         Set up a workflow that collects data from a github repository of your choice.
         <ExpandableText>
           <Section>
-            <Strong>Dynatrace Automations</Strong> lets you create workflows on the fly. Here we
-            create a workflow that collects data from GitHub's REST API.
+            <Strong>Dynatrace Automations</Strong> lets you create workflows on the fly. Here we create a workflow that
+            collects data from GitHub's REST API.
           </Section>
           <Section>
             To use this workflow, you need to press the button above, and then
@@ -55,10 +55,10 @@ export default function CreateIngesterWorkflowButton() {
         </ExpandableText>
       </Paragraph>
       <Button
-        variant="accent"
-        color="primary"
+        variant='accent'
+        color='primary'
         onClick={() => {
-          sendIntent(payload, "dynatrace.automations", "create-new-automation");
+          sendIntent(payload, 'dynatrace.automations', 'create-new-automation');
         }}
       >
         Ingest a github repo

@@ -1,5 +1,5 @@
-import { EVENT_TYPE } from "../../util/constants";
-import { v4 as uuidv4 } from "uuid";
+import { EVENT_TYPE } from '../../util/constants';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface SampleDataOptions {
   eventType?: string;
@@ -45,10 +45,10 @@ export function createRandomBizEvents({
 }: SampleDataOptions): BizEvent[] {
   return createRandomGitHubActions({ numberOfDays, maxRunsPerDay }).map((run) => {
     return {
-      specversion: "1.0",
+      specversion: '1.0',
       id: `demobatch_run_${uuidv4()}`,
       type: eventType,
-      source: "github-actions-profiler",
+      source: 'github-actions-profiler',
       data: {
         ...run,
         run_duration_ms: run.updated_at.getTime() - run.run_started_at.getTime(),
@@ -57,10 +57,7 @@ export function createRandomBizEvents({
   });
 }
 
-function createRandomGitHubActions(options: {
-  numberOfDays: number;
-  maxRunsPerDay: number;
-}): WorkflowRun[] {
+function createRandomGitHubActions(options: { numberOfDays: number; maxRunsPerDay: number }): WorkflowRun[] {
   /**
    * For every day, we generate a random couple of workflow runs
    */
@@ -85,16 +82,13 @@ function createRandomGitHubActions(options: {
 }
 
 function createWorkflowRun(startDate: Date): WorkflowRun {
-  const workflowName = randomItem(
-    ["build", "tests", "codeql-analysis", "publish"],
-    [0.35, 0.35, 0.25, 0.05],
-  );
+  const workflowName = randomItem(['build', 'tests', 'codeql-analysis', 'publish'], [0.35, 0.35, 0.25, 0.05]);
   const started = startDate;
   const updated = new Date(started.getTime() + randomBetween(1000, 1000 * 60 * 10));
   return {
     id: `demo-run-${workflowName}-${uuidv4()}`,
     name: workflowName,
-    conclusion: randomItem(["success", "failure", "cancelled"], [0.85, 0.1, 0.05]),
+    conclusion: randomItem(['success', 'failure', 'cancelled'], [0.85, 0.1, 0.05]),
     run_started_at: new Date(started.getTime()),
     updated_at: new Date(updated.getTime()),
     repository: '{"full_name" : "demo"}',

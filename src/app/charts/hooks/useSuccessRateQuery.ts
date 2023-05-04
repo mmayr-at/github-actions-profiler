@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useDQLQuery } from "../../util/hooks/useDQLQuery";
-import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "../../util/constants";
+import { useEffect, useState } from 'react';
+import { useDQLQuery } from '../../util/hooks/useDQLQuery';
+import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from '../../util/constants';
 
 export type SuccessRate = { category: string; value: number };
 export type UseSuccessRateQueryResult = { rates: SuccessRate[] };
@@ -21,9 +21,7 @@ function query(workflowName: string) {
   | summarize value = count(), by: { category = conclusion }`;
 }
 
-export const useSuccessRateQuery = (
-  workflowName: string,
-): [UseSuccessRateQueryResult | undefined, boolean] => {
+export const useSuccessRateQuery = (workflowName: string): [UseSuccessRateQueryResult | undefined, boolean] => {
   const [result, isLoading] = useDQLQuery(query(workflowName));
   const [rates, setRates] = useState<SuccessRate[] | undefined>();
 

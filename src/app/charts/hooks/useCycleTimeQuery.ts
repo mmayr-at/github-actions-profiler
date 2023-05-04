@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useDQLQuery } from "../../util/hooks/useDQLQuery";
-import { convertToTimeseries, Timeseries } from "@dynatrace/strato-components-preview";
-import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "src/app/util/constants";
+import { useEffect, useState } from 'react';
+import { useDQLQuery } from '../../util/hooks/useDQLQuery';
+import { convertToTimeseries, Timeseries } from '@dynatrace/strato-components-preview';
+import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from 'src/app/util/constants';
 
 export type UseCycleTimeQueryResult = { result: Timeseries[] };
 
@@ -26,9 +26,7 @@ fetch bizevents, from: now() - ${DQL_QUERY_TIMESTAMP_OFFSET}
 `;
 }
 
-export const useCycleTimeQuery = (
-  workflowName: string,
-): [UseCycleTimeQueryResult | undefined, boolean] => {
+export const useCycleTimeQuery = (workflowName: string): [UseCycleTimeQueryResult | undefined, boolean] => {
   const [result, isLoading] = useDQLQuery(query(workflowName));
   const [cycleTimes, setCycleTimes] = useState<Timeseries[] | undefined>();
 

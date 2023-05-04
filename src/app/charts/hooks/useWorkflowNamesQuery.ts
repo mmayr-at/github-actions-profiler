@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { useDQLQuery } from "../../util/hooks/useDQLQuery";
-import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from "../../util/constants";
+import { useEffect, useState } from 'react';
+import { useDQLQuery } from '../../util/hooks/useDQLQuery';
+import { DQL_QUERY_TIMESTAMP_OFFSET, EVENT_TYPE } from '../../util/constants';
 
-const field = "githubWorkflows";
+const field = 'githubWorkflows';
 
 /**
  * DQL query that returns unique qualified names of every GitHub Actions workflow we have data for.

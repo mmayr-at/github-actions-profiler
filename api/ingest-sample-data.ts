@@ -1,4 +1,4 @@
-import { createRandomBizEvents } from "../src/app/data_import/functions/generate-sample-data";
+import { createRandomBizEvents } from '../src/app/data_import/functions/generate-sample-data';
 
 /**
  *  For the purpose of getting you up and running fast, the application contains
@@ -15,16 +15,16 @@ import { createRandomBizEvents } from "../src/app/data_import/functions/generate
  *  Documentation on workflows: https://developer.dynatrace.com/preview/category/workflows .
  */
 export default async (eventType: string) => {
-  const response = await fetch("/platform/classic/environment-api/v2/bizevents/ingest", {
-    method: "POST",
-    headers: { "Content-Type": "application/cloudevent-batch+json" },
+  const response = await fetch('/platform/classic/environment-api/v2/bizevents/ingest', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/cloudevent-batch+json' },
     body: JSON.stringify(createRandomBizEvents({ eventType, maxRunsPerDay: 50, numberOfDays: 30 })),
   });
   if (response.ok) {
-    return "OK";
+    return 'OK';
   } else {
     throw Error(
-      "An error occured when trying to ingest sample data. The API responded with status code [${response.status}] ",
+      'An error occured when trying to ingest sample data. The API responded with status code [${response.status}] ',
     );
   }
 };

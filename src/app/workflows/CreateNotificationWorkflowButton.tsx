@@ -1,46 +1,46 @@
-import { IntentPayload, sendIntent } from "@dynatrace-sdk/navigation";
-import { Button } from "@dynatrace/strato-components-preview/buttons";
-import React from "react";
-import { sendNotificationOnFailedActionsScript } from "./SendNotificationOnFailedActionsScript";
+import { IntentPayload, sendIntent } from '@dynatrace-sdk/navigation';
+import { Button } from '@dynatrace/strato-components-preview/buttons';
+import React from 'react';
+import { sendNotificationOnFailedActionsScript } from './SendNotificationOnFailedActionsScript';
 
 /**
-   * This DQL query finds the success rate in percent for each workflow in bizevents.
-   *
-   * Tip: The most convenient way to create DQL queries that you want to use in your code is is
-   * to write and test the query in a Notebook. Then copy the result to your workflow or code.
-   *
-   * */
+ * This DQL query finds the success rate in percent for each workflow in bizevents.
+ *
+ * Tip: The most convenient way to create DQL queries that you want to use in your code is is
+ * to write and test the query in a Notebook. Then copy the result to your workflow or code.
+ *
+ * */
 const payload: IntentPayload = {
-  title: "Aggregate success rates of previous day",
+  title: 'Aggregate success rates of previous day',
   tasks: {
     successrate: {
-      name: "successrate",
-      action: "dynatrace.automations:run-javascript",
+      name: 'successrate',
+      action: 'dynatrace.automations:run-javascript',
       input: {
         script: sendNotificationOnFailedActionsScript,
       },
     },
     sendnotification: {
-      name: "sendnotification",
-      action: "dynatrace.slack:slack-send-message",
+      name: 'sendnotification',
+      action: 'dynatrace.slack:slack-send-message',
       input: {
-        connection: "",
-        channel: "random",
+        connection: '',
+        channel: 'random',
 
         message: "success rate is {{result('successrate')}}",
-        reactions: "eyes",
+        reactions: 'eyes',
       },
       conditions: {
         custom: "{{result('successrate') <= 75}}",
       },
-      predecessors: ["successrate"],
+      predecessors: ['successrate'],
     },
   },
   trigger: {
     schedule: {
       trigger: {
-        type: "time",
-        time: "09:00",
+        type: 'time',
+        time: '09:00',
       },
     },
   },
@@ -63,12 +63,8 @@ const payload: IntentPayload = {
  * */
 export const CreateNotificationWorkflowButton = () => {
   return (
-      <Button
-        color="primary"
-        onClick={() => sendIntent(payload, "dynatrace.automations", "create-workflow")}
-      >
-        Create Workflow
-      </Button>
+    <Button color='primary' onClick={() => sendIntent(payload, 'dynatrace.automations', 'create-workflow')}>
+      Create Workflow
+    </Button>
   );
-}
-
+};

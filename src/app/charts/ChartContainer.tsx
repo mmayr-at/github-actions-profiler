@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import { Heading, Surface } from "@dynatrace/strato-components-preview";
+import React, { ReactNode } from 'react';
+import { Heading, Surface } from '@dynatrace/strato-components-preview';
 
 interface ChartContainerProps {
   children: ReactNode;
@@ -13,4 +13,4 @@ export const ChartContainer = ({ heading, children }: ChartContainerProps) => {
       {children}
     </Surface>
   );
-}
+};

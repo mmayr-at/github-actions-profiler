@@ -1,4 +1,4 @@
-import { Container, Flex, Heading, Surface, Text } from '@dynatrace/strato-components-preview';
+import { Container, Flex, Surface, Text } from '@dynatrace/strato-components-preview';
 import { ExternalLinkIcon } from '@dynatrace/strato-icons';
 import React, { ReactElement } from 'react';
 

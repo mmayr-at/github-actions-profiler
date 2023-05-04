@@ -1,4 +1,4 @@
-import { EVENT_TYPE } from "../util/constants";
+import { EVENT_TYPE } from '../util/constants';
 
 /**
  * When we dynamically create a workflow from within the app,

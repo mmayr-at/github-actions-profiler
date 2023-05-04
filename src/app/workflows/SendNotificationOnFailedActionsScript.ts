@@ -1,4 +1,4 @@
-import { EVENT_TYPE } from "../util/constants";
+import { EVENT_TYPE } from '../util/constants';
 
 /**
  * This DQL returns the percentage of successful runs for each GitHub workflow.

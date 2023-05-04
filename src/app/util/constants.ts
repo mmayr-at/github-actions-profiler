@@ -3,7 +3,7 @@
 // Change it if you want to start over.
 // See the documentation about 'event.type' for more context here:
 // https://www.dynatrace.com/support/help/platform-modules/business-analytics/ba-events-capturing
-export const EVENT_TYPE = "com.dynatrace.github.workflow.run";
+export const EVENT_TYPE = 'com.dynatrace.github.workflow.run';
 
 // Used in DQL queries to specify event timestamp range. This is *not* related to the updated_at timestamp of the
 // workflow run itself.

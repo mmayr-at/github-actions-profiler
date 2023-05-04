@@ -1,4 +1,4 @@
-import { Flex, Heading, Surface, Text, Paragraph, ExternalLink } from '@dynatrace/strato-components-preview';
+import { Flex, Heading, Surface, Text, Paragraph } from '@dynatrace/strato-components-preview';
 import React, { ReactNode } from 'react';
 
 type CardProps = {
@@ -17,7 +17,7 @@ export const Card = (props: CardProps) => {
         <Heading as='h2' level={4}>
           {title}
         </Heading>
-        {subtitle ? <Text textStyle='base-emphasized'>{subtitle}</Text> : null }
+        {subtitle ? <Text textStyle='base-emphasized'>{subtitle}</Text> : null}
       </Flex>
       <Paragraph>{content}</Paragraph>
       {action}
