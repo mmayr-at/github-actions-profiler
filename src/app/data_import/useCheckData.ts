@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import { functions } from "@dynatrace-sdk/app-utils";
 import { queryExecutionClient } from "@dynatrace-sdk/client-query";
 import {
@@ -62,20 +62,28 @@ function reducer(state: DataImportState, action: DataStateAction): DataImportSta
   }
 }
 
+const MAX_RETRY_COUNT = 6;
+
 export function useCheckForData() {
   const [state, dispatch] = useReducer(reducer, "unknown");
+  const retryCount = useRef<number>(0);
 
   const isDataReady = state === 'ready';
 
+  const loadNumberOfRecords = async () => {
+    dispatch({ type: "start_check" });
+    retryCount.current++;
+    const res = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: 5000 }});
+    dispatch({ type: "check_result", recordsCount: res.result?.records?.length });
+  };
+
   useEffect(() => {
-    const loadNumberOfRecords = async () => {
-      dispatch({ type: "start_check" });
-      const res = await queryExecutionClient.queryExecute({ body: { query, requestTimeoutMilliseconds: 5000 }});
-      dispatch({ type: "check_result", recordsCount: res.result?.records?.length });
-    };
     if (!isDataReady) {
       loadNumberOfRecords();
       const id = setInterval(loadNumberOfRecords, RELOAD_RECORDS_AVAILABLE_INTERVAL_MS);
+      if (retryCount.current >= MAX_RETRY_COUNT) {
+        clearInterval(id);
+      }
       return () => clearInterval(id);
     }
   }, [isDataReady]);
@@ -100,6 +108,6 @@ export function useCheckForData() {
     }
   }
 
-  return { isDataReady, state, ingestData };
+  return { isDataReady, state, ingestData, refetch: () => loadNumberOfRecords() };
 }
 

@@ -58,7 +58,6 @@ function formatTimestamp(value?: Date) {
 }
 
 function isTimeframe(value: unknown): value is { start: Date, end: Date } {
-  console.log(value!['start'] instanceof Date);
   return value !== null && value !== undefined && value['start'] instanceof Date && value['end'] instanceof Date;
 }
 
@@ -78,7 +77,6 @@ function convertToMetrics(records: QueryResult['records']): WorkflowMetrics {
         return '-';
       }
       const week = record.week;
-      console.log(record);
       if (isTimeframe(week)) {
         const start = formatTimestamp(week.start);
         const end = formatTimestamp(week.end);

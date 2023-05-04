@@ -1,22 +1,25 @@
 import React from "react";
-import { Strong } from "@dynatrace/strato-components-preview";
 import { LabeledLoadingIndicator } from "../util/components/LabeledLoadingIndicator";
 import { DataImportState } from "./useCheckData";
 import { ImportSampleDataCard } from "../cards/ImportSampleDataCard";
+import { Button } from "@dynatrace/strato-components-preview";
+import { Card } from "../util/components/Card";
 
 interface InitialDataImportSelectorProps {
   dataImportState: DataImportState;
   onImportButtonClick: () => void;
+  onRefetch: () => void;
 }
 
 export const InitialDataImportSelector = ({
   dataImportState,
   onImportButtonClick,
+  onRefetch,
 }: InitialDataImportSelectorProps) => {
   switch (dataImportState) {
     case "not_available":
       return (
-        <ImportSampleDataCard onClick={onImportButtonClick}/>
+        <ImportSampleDataCard onIngest={onImportButtonClick} onRefetch={onRefetch}/>
       );
     case "checking":
       return <LabeledLoadingIndicator message="Checking if there is data available ..." />;
@@ -27,7 +30,9 @@ export const InitialDataImportSelector = ({
         <LabeledLoadingIndicator message="Import successful, events are being processed ..." />
       );
     case "error":
-      return <Strong>An error occured when importing the sample data!</Strong>;
+      return <Card title="Import Sample Data" content="There was an error ingesting demo data." action={<Button onClick={onImportButtonClick}>Retry</Button>}/>;
+    case "importing":
+      return <LabeledLoadingIndicator message="Ingesting sample data ..." />;
     default:
       return null;
   }

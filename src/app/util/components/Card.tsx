@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 
 type CardProps = {
   title: ReactNode;
-  subtitle: ReactNode;
+  subtitle?: ReactNode;
   content: ReactNode;
   action: ReactNode;
 };
@@ -17,7 +17,7 @@ export const Card = (props: CardProps) => {
         <Heading as='h2' level={4}>
           {title}
         </Heading>
-        <Text textStyle='base-emphasized'>{subtitle}</Text>
+        {subtitle ? <Text textStyle='base-emphasized'>{subtitle}</Text> : null }
       </Flex>
       <Paragraph>{content}</Paragraph>
       {action}

@@ -1,20 +1,23 @@
 import React from 'react';
 import { Card } from '../util/components/Card';
-import { Button } from '@dynatrace/strato-components-preview';
+import { Button, Flex } from '@dynatrace/strato-components-preview';
 
 type ImportSampleDataCardProps = {
-  onClick: () => void;
+  onIngest: () => void;
+  onRefetch: () => void;
 }
 
-export const ImportSampleDataCard = ({ onClick }: ImportSampleDataCardProps) => {
+export const ImportSampleDataCard = ({ onIngest, onRefetch }: ImportSampleDataCardProps) => {
   return (
     <Card
       title='Import Sample Data'
       subtitle='Generate some synthetic data so you can check out the app immediately.'
-      content='Sample app data for the last 7 days will be created and ingested into Grail.'
-      action={<Button variant="accent" color="primary" onClick={onClick}>
+      content='Sample app data for the last 7 days will be created and ingested into Grail or you can check for newly ingested data.'
+      action={<Flex><Button variant="accent" color="primary" onClick={onIngest}>
       Import Sample Data
-    </Button>}
+    </Button><Button color="primary" onClick={onRefetch}>
+      Refetch ingested data
+    </Button></Flex>}
     />
   );
 };

@@ -11,4 +11,4 @@ export const DQL_QUERY_TIMESTAMP_OFFSET = '90d';
 
 // Defines in which interval the data import should re-check if there is data available.
 // See DataImport.tsx for more information.
-export const RELOAD_RECORDS_AVAILABLE_INTERVAL_MS = 10000;
+export const RELOAD_RECORDS_AVAILABLE_INTERVAL_MS = 20000;

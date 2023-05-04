@@ -10,7 +10,7 @@ import { InitialDataImportSelector } from "./data_import/InitialDataImportSelect
 
 export const App = () => {
   const [dismissed, setDismissed] = useState(false);
-  const { isDataReady, state, ingestData } = useCheckForData();
+  const { isDataReady, state, ingestData, refetch } = useCheckForData();
 
   return (
     <Page>
@@ -42,7 +42,7 @@ export const App = () => {
               </Text>
             </List>
             <Grid gridTemplateColumns='repeat(auto-fit, minmax(320px, 1fr));' gap={16}>
-              { !isDataReady ? <InitialDataImportSelector dataImportState={state} onImportButtonClick={ingestData}  /> : <GetNotifiedCard /> }
+              { !isDataReady ? <InitialDataImportSelector dataImportState={state} onImportButtonClick={ingestData} onRefetch={refetch} /> : <GetNotifiedCard /> }
               <GithubIngesterActionCard />
             </Grid>
           </Flex>
