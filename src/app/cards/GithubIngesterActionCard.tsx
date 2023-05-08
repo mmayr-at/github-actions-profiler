@@ -6,9 +6,8 @@ export const GithubIngesterActionCard = () => {
   return (
     <Card
       title='GitHub Ingester Action'
-      subtitle='Use our ingester GitHub Action to observe your workflows as they happen.'
-      content='This is a GitHub Action for ingesting the information about a completed GitHub Actions Workflow as a Business
-      Event into Dynatrace Grail.'
+      subtitle='Use our ingest action to observe your workflows in real-time.'
+      content='This action ingests information about a completed GitHub Actions workflow into Dynatrace Grail as a business event.'
       action={
         <ExternalLink href='https://github.com/SemanticlabsGmbH/dynatrace-workflow-ingester'>Go to GitHub</ExternalLink>
       }

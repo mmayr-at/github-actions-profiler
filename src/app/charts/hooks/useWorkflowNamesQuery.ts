@@ -11,7 +11,7 @@ const field = 'githubWorkflows';
  * We create the GitHub Actions workflow identifier out of the full name of the GitHub repository, and the name of the
  * workflow.
  *
- * For more on building DQL queries, see https://developer.dynatrace.com/preview/explanation/dynatrace-query-language/
+ * For more on building DQL queries, see https://developer.dynatrace.com/explanation/dynatrace-query-language/
  * */
 const query = `
 fetch bizevents, from:now()-${DQL_QUERY_TIMESTAMP_OFFSET}

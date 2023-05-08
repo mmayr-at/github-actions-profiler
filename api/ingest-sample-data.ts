@@ -12,7 +12,7 @@ import { createRandomBizEvents } from '../src/app/data_import/functions/generate
  *
  *  You can use our GitHub Ingester Action (TODO: link to ingester) to do this.
  *
- *  Documentation on workflows: https://developer.dynatrace.com/preview/category/workflows .
+ *  Documentation on workflows: https://developer.dynatrace.com/category/workflows .
  */
 export default async (eventType: string) => {
   const response = await fetch('/platform/classic/environment-api/v2/bizevents/ingest', {

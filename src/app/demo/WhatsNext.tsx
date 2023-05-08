@@ -20,7 +20,7 @@ export const WhatsNext = () => {
         <Paragraph>Fork this app on GitHub and learn how to write apps for Dynatrace.</Paragraph>
       </Flex>
       <Flex alignItems='right'>
-        <ExternalLink href='https://github.com/Dynatrace/multi-monitor-updater'>Fork on Github</ExternalLink>
+        <ExternalLink href='https://github.com/Dynatrace/github-actions-profiler'>Fork on Github</ExternalLink>
       </Flex>
     </Container>
   );

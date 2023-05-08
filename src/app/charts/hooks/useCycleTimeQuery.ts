@@ -11,7 +11,7 @@ export type UseCycleTimeQueryResult = { result: Timeseries[] };
  * Note that we filter the data first, by EVENT_TYPE as well as by the full name of the selected action,
  * which we construct from the repository information and the name of the action, which we got from Github API,
  *
- * For more on building DQL queries, see https://developer.dynatrace.com/preview/explanation/dynatrace-query-language/
+ * For more on building DQL queries, see https://developer.dynatrace.com/explanation/dynatrace-query-language/
  * */
 function query(workflowName: string) {
   return `

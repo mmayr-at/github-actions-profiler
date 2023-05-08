@@ -55,8 +55,8 @@ const payload: IntentPayload = {
  * - A task 'successrate' that will send a DQL query to your environment.
  * - A task 'sendnotification', that will send a Slack notification to a channel of your choice.
  *
- * To learn more about Intents, see https://developer.dynatrace.com/preview/explanation/intents/
- * To learn more about Workflows, see https://developer.dynatrace.com/preview/category/workflows/
+ * To learn more about Intents, see https://developer.dynatrace.com/explanation/intents/
+ * To learn more about Workflows, see https://developer.dynatrace.com/category/workflows/
  * In order to use the Slack-Integration, you need to first install add the integration in the Dynatrace Hub:
  * https://ulc38583.apps.dynatrace.com/ui/apps/dynatrace.hub
  *
@@ -64,7 +64,7 @@ const payload: IntentPayload = {
 export const CreateNotificationWorkflowButton = () => {
   return (
     <Button color='primary' onClick={() => sendIntent(payload, 'dynatrace.automations', 'create-workflow')}>
-      Create Workflow
+      Create workflow
     </Button>
   );
 };

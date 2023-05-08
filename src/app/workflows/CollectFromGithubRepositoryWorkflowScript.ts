@@ -19,7 +19,7 @@ writes that data as business events into Dynatrace Grail.
   For testing purposes, you can simply add the token directly into the constant below. If you want to use this code beyond simple testing,
   we strongly recommend to NOT store any personal credentials directly inside a Workflow, but instead make use of Dynatrace secure Secret Management capabilities.
 
-  See https://developer.dynatrace.com/preview/develop/security/secrets-management/
+  See https://developer.dynatrace.com/develop/security/secrets-management/
 */
 const GITHUB_ACCESS_TOKEN = "[YOUR GITHUB TOKEN]";
 
