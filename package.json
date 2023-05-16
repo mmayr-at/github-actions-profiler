@@ -1,6 +1,6 @@
 {
   "name": "github-actions-profiler",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "description": "An empty project",
   "engines": {
     "node": ">=16.13.0"
