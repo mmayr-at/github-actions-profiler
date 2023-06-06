@@ -1,12 +1,12 @@
 import React from 'react';
-import { Flex, LoadingIndicator, LoadingIndicatorProps } from '@dynatrace/strato-components-preview';
+import { Flex, ProgressCircle, ProgressCircleProps } from '@dynatrace/strato-components-preview';
 
 type CenteredLoadingIndicatorProps = {
   /** The height of the chart.
    * @defaultValue 300px
    */
   height?: string;
-} & LoadingIndicatorProps;
+} & ProgressCircleProps;
 
 /**
  * A component to show a centered loading indicator with some space around.
@@ -15,7 +15,12 @@ type CenteredLoadingIndicatorProps = {
 export const CenteredLoadingIndicator = ({ height = '300px', ...rest }: CenteredLoadingIndicatorProps) => {
   return (
     <Flex justifyContent='center' alignItems='center' height={height}>
-      <LoadingIndicator {...rest} />
+      <ProgressCircle
+        {...rest}
+        size='small'
+        /*TODO: Add a meaningful aria-label for the ProgressCircle element.*/
+        aria-label='Description of the ProgressCircle.'
+      />
     </Flex>
   );
 };
