@@ -33,8 +33,6 @@ export const InitialDataImportSelector = ({
           action={<Button onClick={onImportButtonClick}>Retry</Button>}
         />
       );
-    case 'importing':
-      return <LabeledLoadingIndicator message='Ingesting sample data ...' />;
     default:
       return null;
   }
