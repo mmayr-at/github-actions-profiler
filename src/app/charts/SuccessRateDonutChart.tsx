@@ -17,7 +17,7 @@ export default function SuccessRateDonutChart({ workflow }: SuccessRateProps): R
       {isLoading ? (
         <CenteredLoadingIndicator />
       ) : (
-        <DonutChart data={{ slices: successRates?.rates || [] }} colorPalette={COLOR_PALETTE} height='300'>
+        <DonutChart data={{ slices: successRates?.rates || [] }} colorPalette={COLOR_PALETTE}>
           <DonutChart.Legend position='bottom'></DonutChart.Legend>
         </DonutChart>
       )}
