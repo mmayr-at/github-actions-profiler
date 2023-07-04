@@ -26,7 +26,7 @@
     "@dynatrace-sdk/app-environment": "^1.0.0",
     "@dynatrace-sdk/app-utils": "0.2.2",
     "@dynatrace-sdk/navigation": "^1.0.0",
-    "@dynatrace-sdk/units": "0.8.1",
+    "@dynatrace-sdk/units": "0.8.0",
     "@dynatrace/strato-components-preview": "0.98.1",
     "@dynatrace/strato-design-tokens": "0.14.0",
     "@dynatrace/strato-icons": "0.31.0",
