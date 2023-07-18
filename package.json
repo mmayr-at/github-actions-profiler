@@ -53,5 +53,8 @@
     "jest-junit": "^16.0.0",
     "prettier": "^2.8.7",
     "ts-jest": "^27.1.5"
+  },
+  "overrides": {
+    "semver": "7.5.4"
   }
 }
