@@ -5,7 +5,7 @@ const config: CliOptions = {
   icon: "src/assets/app-icon.png",
   app: {
     name: "GitHub Actions Profiler",
-    version: "1.2.1",
+    version: "1.2.2",
     description: "Sample app to analyze GitHub Actions workflows and optimize software development",
     id: "my.github.actions.profiler",
     scopes: [
