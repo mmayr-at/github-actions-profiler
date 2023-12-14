@@ -87,7 +87,7 @@ export function useCheckForData() {
   async function ingestData() {
     dispatch({ type: 'start_import' });
     try {
-      const response = await functions.call('ingest-sample-data', EVENT_TYPE);
+      const response = await functions.call('ingest-sample-data', { data: EVENT_TYPE });
       if (response.ok) {
         dispatch({ type: 'import_success' });
       } else {
